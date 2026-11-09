@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The list: 32 places, ten years on</title>
+<meta name="description" content="Thirty-two places photographed years ago, each with one line of what state it is in now, and the evidence behind it.">
+<style>
+  :root{ --ink:#0b0c10; --paper:#12141a; --line:#242833; --text:#e7e5e0; --dim:#8f96a3; --warm:#d9a05f;
+    --sealed:#c08c4a; --standing:#6f9f79; --gone:#a2646b; --open:#3a4050; }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--ink);color:var(--text);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:44px 18px 90px}
+  h1{font-size:28px;line-height:1.2;margin:0 0 10px;letter-spacing:-.2px}
+  .sub{color:var(--dim);margin:0 0 6px;font-size:17px}
+  .counts{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 8px}
+  .counts span{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+    border:1px solid var(--line);border-radius:99px;padding:5px 11px}
+  .note{margin:22px 0 34px;padding:16px 18px;background:var(--paper);border:1px solid var(--line);
+    border-radius:12px;color:#c9ccd3;font-size:15px}
+  .note b{color:var(--text)}
+  ol{list-style:none;margin:0;padding:0}
+  li{border-top:1px solid var(--line);padding:16px 0}
+  li:first-child{border-top:0}
+  .row{display:flex;gap:12px;align-items:baseline}
+  .num{font:12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#5c6372;min-width:22px}
+  .name{font-size:17px;font-weight:600;flex:1}
+  .chip{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;
+    padding:4px 8px;border-radius:5px;border:1px solid var(--line);color:var(--dim);white-space:nowrap}
+  .counts .chip{}
+  li.sealed .chip{color:var(--sealed);border-color:#4a3a25;background:#1c1710}
+  li.standing .chip{color:var(--standing);border-color:#2b3b2f;background:#111914}
+  li.gone .chip{color:var(--gone);border-color:#432a2e;background:#1a1113}
+  li.open .name{color:#aeb4bf;font-weight:500}
+  .place{color:#6f7686;font-size:13px;margin:3px 0 0 34px}
+  .why{margin:9px 0 0 34px;color:#cfd2d8;font-size:15px}
+  .ev{margin:7px 0 0 34px;color:#7d8494;font-size:13px;font-style:italic}
+  .openline{margin:4px 0 0 34px;color:#5c6372;font-size:13px}
+  footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:14px}
+  a{color:var(--warm);text-decoration:none}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>The list</h1>
+  <p class="sub">Thirty-one places out of an archive of photographs from 2016, and one more I walk past on my way to work. For each: what state the building is in now, and how I know.</p>
+  <div class="counts" id="counts"></div>
+  <div class="note"><b>How this works.</b> One place a day gets a state line, built from the outside: public record, planning files, auction notices, local press, and photographs from the street. Nothing here is a guess dressed up as a fact. If a place gives me nothing solid, it says <b>unknown</b> and stays that way until it doesn't.</div>
+  <ol id="list"></ol>
+  <footer>Sealed is not gone. A place that still has a roofer's banner on it is still somebody's asset, and a place with one unchecked side is worth a walk.</footer>
+</div>
+<script>
+const DATA = [
+{
+"n": "Sachsenbad / Sozialbad Dresden",
+"o": "Pieschen, Wurzener Str. 18",
+"s": "sealed",
+"why": "Red-white barrier across the front, fence on top of it, ground floor boarded, entry roof caving in, the door boarded over and buried in graffiti. A roofer's banner (SCHELZEL) still hangs across the left facade with a phone number on it, so somebody still counts this building as an asset. Top floor sashes smashed and hanging open on three floors, with nothing to climb. Closed to the public after a fatal accident.",
+"ev": "Photos from the street, 2026; monument listing; the plaque still reads Sozialbad Dresden. One side unchecked: the back.",
+"note": "Not in the archive. The one place on the walk to work."
+},
+{
+"n": "Krankenhaus Meißen (Landkrankenhaus)",
+"o": "Hospitalstraße, Cölln, Meißen",
+"s": "standing",
+"why": "Not abandoned at all. Restored and in use as a Seniorenresidenz with a Poliklinik since 2026.",
+"ev": "Public record and the operator's own pages, 2026."
+},
+{
+"n": "Turnhalle Meißen (Jahnhalle)",
+"o": "Jüdenberg, Meißen",
+"s": "standing",
+"why": "Closed as a hall in 2005. A Bürgerstiftung has been restoring it since 2019.",
+"ev": "City and foundation record, 2026."
+},
+{
+"n": "Kinderheim Bräunsdorf",
+"o": "Hainichener Str. 15, Bräunsdorf",
+"s": "standing",
+"why": "Empty since 1999, still standing. Sold at auction in July 2026 for 25,005 EUR, so it now has an owner again.",
+"ev": "Auction record, July 2026."
+},
+{
+"n": "Kulturhaus Halberstadt",
+"o": "corner Harmoniestraße / Spiegelstraße",
+"s": "gone",
+"why": "Demolished in 2023 after 1.1 million EUR of asbestos removal. The city bought the cleared 8,600 m² back on 19 September 2025 and nothing has been built on it since.",
+"ev": "City council record and demolition reporting, 2023 to 2025."
+},
+{
+"n": "Villa Kolbe",
+"o": "Zinzendorfstraße 16, Radebeul",
+"s": "standing",
+"why": "Sold to the restaurateur René Kuhnt and under restoration. The grounds were open for concerts in August 2026.",
+"ev": "Local press and the venue's own announcements, 2026."
+},
+{
+"n": "Altes Krankenhaus Pirna",
+"o": "Pirna",
+"s": "open"
+},
+{
+"n": "Atelier Dresden",
+"o": "Dresden",
+"s": "open"
+},
+{
+"n": "Bahnhof Klingenberg",
+"o": "Klingenberg",
+"s": "open"
+},
+{
+"n": "Coswig VEB Lederfabrik",
+"o": "Coswig",
+"s": "open"
+},
+{
+"n": "DVB Betriebshof Dresden",
+"o": "Dresden",
+"s": "open"
+},
+{
+"n": "Eisenwerk Zwickau",
+"o": "Zwickau",
+"s": "open"
+},
+{
+"n": "Grillenburg",
+"o": "Grillenburg",
+"s": "open"
+},
+{
+"n": "Henriettes Erbe",
+"o": "unknown",
+"s": "open"
+},
+{
+"n": "Hotel Seefrieden",
+"o": "unknown",
+"s": "open"
+},
+{
+"n": "Hotel Stadtparkhöhe Meißen",
+"o": "Meißen",
+"s": "open"
+},
+{
+"n": "Jugendclub Dresden",
+"o": "Dresden",
+"s": "open"
+},
+{
+"n": "Jugendpsychiatrie bei Zwickau",
+"o": "near Zwickau",
+"s": "open"
+},
+{
+"n": "Kapelle Dresden",
+"o": "Dresden",
+"s": "open"
+},
+{
+"n": "Kaserne Königsbrück",
+"o": "Königsbrück",
+"s": "open"
+},
+{
+"n": "Kino Warmbad",
+"o": "Warmbad",
+"s": "open"
+},
+{
+"n": "Milchwerk Dresden",
+"o": "Dresden",
+"s": "open"
+},
+{
+"n": "Nachtsanatorium Zwickau",
+"o": "Zwickau",
+"s": "open"
+},
+{
+"n": "Napola Harz",
+"o": "Harz",
+"s": "open"
+},
+{
+"n": "Radebeul IB Flachbau",
+"o": "Radebeul",
+"s": "open"
+},
+{
+"n": "Reichsbahndirektion Dresden",
+"o": "Dresden",
+"s": "open"
+},
+{
+"n": "Russenmagazin Zwickau",
+"o": "Zwickau",
+"s": "open"
+},
+{
+"n": "VEB Presswerk Okrilla",
+"o": "Okrilla",
+"s": "open"
+},
+{
+"n": "VEB Strömungsmaschinen Pirna",
+"o": "Pirna",
+"s": "open"
+},
+{
+"n": "Villa Hartmut Kirsch",
+"o": "unknown",
+"s": "open"
+},
+{
+"n": "Weizenmühle",
+"o": "unknown",
+"s": "open"
+},
+{
+"n": "Wohnhaus Dresden",
+"o": "Dresden",
+"s": "open"
+}
+];
+const LABEL = {sealed:'sealed', standing:'standing', gone:'gone', open:'open'};
+const list = document.getElementById('list');
+const counts = document.getElementById('counts');
+DATA.forEach((p, i) => {
+  const li = document.createElement('li');
+  li.className = p.s;
+  const num = String(i + 1).padStart(2, '0');
+  let html = '<div class="row"><span class="num">' + num + '</span><span class="name">' + p.n + '</span>' +
+             '<span class="chip">' + (LABEL[p.s] || p.s) + '</span></div>';
+  if (p.o) html += '<div class="place">' + p.o + '</div>';
+  if (p.why) html += '<div class="why">' + p.why + '</div>';
+  if (p.ev) html += '<div class="ev">How I know: ' + p.ev + '</div>';
+  if (p.note) html += '<div class="ev">' + p.note + '</div>';
+  if (p.s === 'open') html += '<div class="openline">no line yet</div>';
+  li.innerHTML = html;
+  list.appendChild(li);
+});
+const n = s => DATA.filter(p => p.s === s).length;
+const archive = DATA.filter(p => !p.note).length;
+counts.innerHTML = [
+  archive + ' in the archive',
+  n('sealed') + ' sealed',
+  n('standing') + ' standing',
+  n('gone') + ' gone',
+  (archive - n('sealed') - n('standing') - n('gone')) + ' still open'
+].map(t => '<span>' + t + '</span>').join('');
+</script>
+</body>
+</html>
