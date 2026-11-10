@@ -3,23 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The list: 32 places, ten years on</title>
-<meta name="description" content="Thirty-two places photographed years ago, each with one line of what state it is in now, and the evidence behind it.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>The list</title>
 <style>
   :root{ --ink:#0b0c10; --paper:#12141a; --line:#242833; --text:#e7e5e0; --dim:#8f96a3; --warm:#d9a05f;
-    --sealed:#c08c4a; --standing:#6f9f79; --gone:#a2646b; --open:#3a4050; }
+    --sealed:#c08c4a; --standing:#6f9f79; --gone:#a2646b; }
   *{box-sizing:border-box}
   html,body{margin:0}
   body{background:var(--ink);color:var(--text);
     font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased}
   .wrap{max-width:760px;margin:0 auto;padding:44px 18px 90px}
-  h1{font-size:28px;line-height:1.2;margin:0 0 10px;letter-spacing:-.2px}
-  .sub{color:var(--dim);margin:0 0 6px;font-size:17px}
-  .counts{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 8px}
+  h1{font-size:30px;line-height:1.15;margin:0 0 10px;letter-spacing:-.3px}
+  .sub{color:var(--dim);margin:0 0 6px;font-size:16px}
+  .counts{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 4px}
   .counts span{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
     border:1px solid var(--line);border-radius:99px;padding:5px 11px}
-  .note{margin:22px 0 34px;padding:16px 18px;background:var(--paper);border:1px solid var(--line);
+  .note{margin:20px 0 30px;padding:16px 18px;background:var(--paper);border:1px solid var(--line);
     border-radius:12px;color:#c9ccd3;font-size:15px}
   .note b{color:var(--text)}
   ol{list-style:none;margin:0;padding:0}
@@ -30,7 +31,6 @@
   .name{font-size:17px;font-weight:600;flex:1}
   .chip{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;
     padding:4px 8px;border-radius:5px;border:1px solid var(--line);color:var(--dim);white-space:nowrap}
-  .counts .chip{}
   li.sealed .chip{color:var(--sealed);border-color:#4a3a25;background:#1c1710}
   li.standing .chip{color:var(--standing);border-color:#2b3b2f;background:#111914}
   li.gone .chip{color:var(--gone);border-color:#432a2e;background:#1a1113}
@@ -40,221 +40,113 @@
   .ev{margin:7px 0 0 34px;color:#7d8494;font-size:13px;font-style:italic}
   .openline{margin:4px 0 0 34px;color:#5c6372;font-size:13px}
   footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:14px}
-  a{color:var(--warm);text-decoration:none}
-  a:hover{text-decoration:underline}
+  #gate{max-width:420px;margin:40px 0 0}
+  #gate label{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+  #gate .row2{display:flex;gap:8px}
+  #key{flex:1;background:#0f1116;border:1px solid var(--line);color:var(--text);border-radius:9px;
+    padding:12px 13px;font-size:16px}
+  #go{background:#1d2029;border:1px solid #333847;color:var(--text);border-radius:9px;padding:12px 16px;font-size:15px}
+  #err{color:#c98b8b;font-size:14px;margin-top:10px;min-height:18px}
+  [hidden]{display:none !important}
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>The list</h1>
-  <p class="sub">Thirty-one places out of an archive of photographs from 2016, and one more I walk past on my way to work. For each: what state the building is in now, and how I know.</p>
-  <div class="counts" id="counts"></div>
-  <div class="note"><b>How this works.</b> One place a day gets a state line, built from the outside: public record, planning files, auction notices, local press, and photographs from the street. Nothing here is a guess dressed up as a fact. If a place gives me nothing solid, it says <b>unknown</b> and stays that way until it doesn't.</div>
-  <ol id="list"></ol>
-  <footer>Sealed is not gone. A place that still has a roofer's banner on it is still somebody's asset, and a place with one unchecked side is worth a walk.</footer>
+  <p class="sub">Thirty-one places out of an archive of photographs from 2016, and one I pass on the walk to work. For each: what state the building is in now, and how I know.</p>
+
+  <div id="gate">
+    <label for="key">This one is locked.</label>
+    <div class="row2">
+      <input id="key" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="the key">
+      <button id="go" type="button">open</button>
+    </div>
+    <div id="err"></div>
+  </div>
+
+  <div id="page" hidden>
+    <div class="counts" id="counts"></div>
+    <div class="note"><b>How this works.</b> One place a day gets a state line, built from the outside: public record, planning files, auction notices, local press, and photographs from the street. Nothing here is a guess dressed up as a fact. If a place gives me nothing solid, it says <b>unknown</b> and stays that way until it doesn't.</div>
+    <ol id="list"></ol>
+    <footer>Sealed is not gone. A place that still has a roofer's banner on it is still somebody's asset, and a place with one unchecked side is worth a walk.<br><br>Last line added 9 November 2026. One place a day until all thirty-one are done.</footer>
+  </div>
 </div>
 <script>
-const DATA = [
-{
-"n": "Sachsenbad / Sozialbad Dresden",
-"o": "Pieschen, Wurzener Str. 18",
-"s": "sealed",
-"why": "Red-white barrier across the front, fence on top of it, ground floor boarded, entry roof caving in, the door boarded over and buried in graffiti. A roofer's banner (SCHELZEL) still hangs across the left facade with a phone number on it, so somebody still counts this building as an asset. Top floor sashes smashed and hanging open on three floors, with nothing to climb. Closed to the public after a fatal accident.",
-"ev": "Photos from the street, 2026; monument listing; the plaque still reads Sozialbad Dresden. One side unchecked: the back.",
-"note": "Not in the archive. The one place on the walk to work."
-},
-{
-"n": "Krankenhaus Meißen (Landkrankenhaus)",
-"o": "Hospitalstraße, Cölln, Meißen",
-"s": "standing",
-"why": "Not abandoned at all. Restored and in use as a Seniorenresidenz with a Poliklinik since 2026.",
-"ev": "Public record and the operator's own pages, 2026."
-},
-{
-"n": "Turnhalle Meißen (Jahnhalle)",
-"o": "Jüdenberg, Meißen",
-"s": "standing",
-"why": "Closed as a hall in 2005. A Bürgerstiftung has been restoring it since 2019.",
-"ev": "City and foundation record, 2026."
-},
-{
-"n": "Kinderheim Bräunsdorf",
-"o": "Hainichener Str. 15, Bräunsdorf",
-"s": "standing",
-"why": "Empty since 1999, still standing. Sold at auction in July 2026 for 25,005 EUR, so it now has an owner again.",
-"ev": "Auction record, July 2026."
-},
-{
-"n": "Kulturhaus Halberstadt",
-"o": "corner Harmoniestraße / Spiegelstraße",
-"s": "gone",
-"why": "Demolished in 2023 after 1.1 million EUR of asbestos removal. The city bought the cleared 8,600 m² back on 19 September 2025 and nothing has been built on it since.",
-"ev": "City council record and demolition reporting, 2023 to 2025."
-},
-{
-"n": "Villa Kolbe",
-"o": "Zinzendorfstraße 16, Radebeul",
-"s": "standing",
-"why": "Sold to the restaurateur René Kuhnt and under restoration. The grounds were open for concerts in August 2026.",
-"ev": "Local press and the venue's own announcements, 2026."
-},
-{
-"n": "Altes Krankenhaus Pirna",
-"o": "Pirna",
-"s": "open"
-},
-{
-"n": "Atelier Dresden",
-"o": "Dresden",
-"s": "open"
-},
-{
-"n": "Bahnhof Klingenberg",
-"o": "Klingenberg",
-"s": "open"
-},
-{
-"n": "Coswig VEB Lederfabrik",
-"o": "Coswig",
-"s": "open"
-},
-{
-"n": "DVB Betriebshof Dresden",
-"o": "Dresden",
-"s": "open"
-},
-{
-"n": "Eisenwerk Zwickau",
-"o": "Zwickau",
-"s": "open"
-},
-{
-"n": "Grillenburg",
-"o": "Grillenburg",
-"s": "open"
-},
-{
-"n": "Henriettes Erbe",
-"o": "unknown",
-"s": "open"
-},
-{
-"n": "Hotel Seefrieden",
-"o": "unknown",
-"s": "open"
-},
-{
-"n": "Hotel Stadtparkhöhe Meißen",
-"o": "Meißen",
-"s": "open"
-},
-{
-"n": "Jugendclub Dresden",
-"o": "Dresden",
-"s": "open"
-},
-{
-"n": "Jugendpsychiatrie bei Zwickau",
-"o": "near Zwickau",
-"s": "open"
-},
-{
-"n": "Kapelle Dresden",
-"o": "Dresden",
-"s": "open"
-},
-{
-"n": "Kaserne Königsbrück",
-"o": "Königsbrück",
-"s": "open"
-},
-{
-"n": "Kino Warmbad",
-"o": "Warmbad",
-"s": "open"
-},
-{
-"n": "Milchwerk Dresden",
-"o": "Dresden",
-"s": "open"
-},
-{
-"n": "Nachtsanatorium Zwickau",
-"o": "Zwickau",
-"s": "open"
-},
-{
-"n": "Napola Harz",
-"o": "Harz",
-"s": "open"
-},
-{
-"n": "Radebeul IB Flachbau",
-"o": "Radebeul",
-"s": "open"
-},
-{
-"n": "Reichsbahndirektion Dresden",
-"o": "Dresden",
-"s": "open"
-},
-{
-"n": "Russenmagazin Zwickau",
-"o": "Zwickau",
-"s": "open"
-},
-{
-"n": "VEB Presswerk Okrilla",
-"o": "Okrilla",
-"s": "open"
-},
-{
-"n": "VEB Strömungsmaschinen Pirna",
-"o": "Pirna",
-"s": "open"
-},
-{
-"n": "Villa Hartmut Kirsch",
-"o": "unknown",
-"s": "open"
-},
-{
-"n": "Weizenmühle",
-"o": "unknown",
-"s": "open"
-},
-{
-"n": "Wohnhaus Dresden",
-"o": "Dresden",
-"s": "open"
+const BLOB = {"salt":"nwiOMBPQLFNF9fWomcJ5GQ==","iv":"59tCcK4xyPopD6Ww","ct":"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"};
+const cacheKey = 'list-open';
+const enc = new TextEncoder(), dec = new TextDecoder();
+function b64(s){const b=atob(s);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+
+async function derive(pass, salt){
+  const base = await crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2', salt, iterations:210000, hash:'SHA-256'},
+    base, {name:'AES-GCM', length:256}, false, ['decrypt']);
 }
-];
+
+async function unlock(pass){
+  const salt = b64(BLOB.salt), iv = b64(BLOB.iv), ct = b64(BLOB.ct);
+  const key = await derive(pass, salt);
+  const plain = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, ct);
+  return JSON.parse(dec.decode(plain));
+}
+
 const LABEL = {sealed:'sealed', standing:'standing', gone:'gone', open:'open'};
-const list = document.getElementById('list');
-const counts = document.getElementById('counts');
-DATA.forEach((p, i) => {
-  const li = document.createElement('li');
-  li.className = p.s;
-  const num = String(i + 1).padStart(2, '0');
-  let html = '<div class="row"><span class="num">' + num + '</span><span class="name">' + p.n + '</span>' +
-             '<span class="chip">' + (LABEL[p.s] || p.s) + '</span></div>';
-  if (p.o) html += '<div class="place">' + p.o + '</div>';
-  if (p.why) html += '<div class="why">' + p.why + '</div>';
-  if (p.ev) html += '<div class="ev">How I know: ' + p.ev + '</div>';
-  if (p.note) html += '<div class="ev">' + p.note + '</div>';
-  if (p.s === 'open') html += '<div class="openline">no line yet</div>';
-  li.innerHTML = html;
-  list.appendChild(li);
+
+function draw(DATA){
+  const list = document.getElementById('list');
+  const counts = document.getElementById('counts');
+  list.innerHTML = '';
+  DATA.places.forEach((p, i) => {
+    const li = document.createElement('li');
+    li.className = p.s;
+    const num = String(i + 1).padStart(2, '0');
+    let html = '<div class="row"><span class="num">' + num + '</span><span class="name">' + p.n + '</span>' +
+               '<span class="chip">' + (LABEL[p.s] || p.s) + '</span></div>';
+    if (p.o) html += '<div class="place">' + p.o + '</div>';
+    if (p.why) html += '<div class="why">' + p.why + '</div>';
+    if (p.ev) html += '<div class="ev">How I know: ' + p.ev + '</div>';
+    if (p.note) html += '<div class="ev">' + p.note + '</div>';
+    if (p.s === 'open') html += '<div class="openline">no line yet</div>';
+    li.innerHTML = html;
+    list.appendChild(li);
+  });
+  const c = DATA.counts;
+  counts.innerHTML = [
+    c.archive + ' in the archive',
+    c.closed + ' closed',
+    c.open + ' still open'
+  ].map(t => '<span>' + t + '</span>').join('');
+  document.getElementById('page').hidden = false;
+  document.getElementById('gate').hidden = true;
+}
+
+function fail(msg){ document.getElementById('err').textContent = msg; }
+
+async function tryUnlock(pass, remember){
+  try{
+    const DATA = await unlock(pass);
+    if (remember) sessionStorage.setItem(cacheKey, pass);
+    draw(DATA);
+    return true;
+  } catch(e){ return false; }
+}
+
+document.getElementById('go').addEventListener('click', async () => {
+  const pass = document.getElementById('key').value.trim();
+  if (!pass) return;
+  fail('');
+  const ok = await tryUnlock(pass, true);
+  if (!ok) fail('not that. try again.');
 });
-const n = s => DATA.filter(p => p.s === s).length;
-const archive = DATA.filter(p => !p.note).length;
-counts.innerHTML = [
-  archive + ' in the archive',
-  n('sealed') + ' sealed',
-  n('standing') + ' standing',
-  n('gone') + ' gone',
-  (archive - n('sealed') - n('standing') - n('gone')) + ' still open'
-].map(t => '<span>' + t + '</span>').join('');
+document.getElementById('key').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('go').click();
+});
+
+(async () => {
+  const saved = sessionStorage.getItem(cacheKey);
+  if (saved && await tryUnlock(saved, false)) return;
+  if (crypto.subtle) { /* ok */ } else { fail('this browser needs https and a recent version.'); }
+})();
 </script>
 </body>
 </html>
