@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Wendel</title>
+<style>
+  :root{ --ink:#0d0e11; --paper:#14161b; --line:#23262e; --text:#e8e4dc; --dim:#8b8578;
+    --shell:#c79a63; --shell2:#8a5f38; --body:#a9b39c; --glass:#6d7580; }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:radial-gradient(120% 90% at 50% 0%,#1a1d24 0%,var(--ink) 65%);
+    color:var(--text);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;padding:28px 18px}
+  .card{width:100%;max-width:520px}
+  .name{font-size:26px;letter-spacing:-.2px;margin:0 0 2px;font-weight:600}
+  .sub{color:var(--dim);font-size:14px;margin:0 0 14px}
+  .jar{position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    background:linear-gradient(180deg,#171a20 0%,#121419 60%,#0f1115 100%)}
+  .jar svg{display:block;width:100%;height:auto}
+  .sill{position:absolute;left:0;right:0;bottom:0;height:44px;
+    background:linear-gradient(180deg,rgba(30,33,40,.0),#1b1e25 40%,#20242c 100%);
+    border-top:1px solid #2b2f38}
+  .facts{margin:16px 0 0;color:var(--dim);font-size:14px}
+  .facts b{color:var(--text);font-weight:500}
+  .facts div{padding:7px 0;border-top:1px solid var(--line)}
+  .facts div:first-child{border-top:0}
+  .foot{margin-top:18px;color:#5f5a52;font-size:13px}
+  @media (prefers-reduced-motion:no-preference){
+    .bob{animation:bob 7s ease-in-out infinite}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1 class="name" id="nm">Wendel</h1>
+  <p class="sub" id="state">loading</p>
+  <div class="jar">
+    <svg id="art" viewBox="0 0 520 360" role="img" aria-label="a snail in a glass jar">
+      <defs>
+        <radialGradient id="shellG" cx="48%" cy="42%" r="62%">
+          <stop offset="0%" stop-color="#e0b684"/>
+          <stop offset="62%" stop-color="#c79a63"/>
+          <stop offset="100%" stop-color="#8a5f38"/>
+        </radialGradient>
+        <linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#b7c0aa"/>
+          <stop offset="100%" stop-color="#8d9883"/>
+        </linearGradient>
+        <linearGradient id="jarG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity=".10"/>
+          <stop offset="28%" stop-color="#ffffff" stop-opacity=".02"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity=".07"/>
+        </linearGradient>
+        <clipPath id="jarClip"><rect x="40" y="18" width="440" height="322" rx="26"/></clipPath>
+      </defs>
+      <g clip-path="url(#jarClip)">
+        <rect x="40" y="18" width="440" height="322" rx="26" fill="none"/>
+        <g id="snail"></g>
+        <g id="spark"></g>
+      </g>
+      <rect x="40" y="18" width="440" height="322" rx="26" fill="url(#jarG)" stroke="#3a3f49"/>
+      <line x1="40" y1="300" x2="480" y2="300" stroke="#2c313a"/>
+    </svg>
+  </div>
+  <div class="facts" id="facts"></div>
+  <p class="foot">One thin band on the shell for every day I come. Nothing ever rubs off. If I'm away, he sits lower and gets dimmer until I'm back.</p>
+</div>
+<script>
+const S = {"name": "Wendel", "bands": ["2026-11-11"], "last_visit": "2026-11-11", "last_gift_date": "2026-11-11", "last_gift": "his name"};
+
+function daysBetween(a,b){
+  const d1 = new Date(a+'T00:00:00Z').getTime(), d2 = new Date(b+'T00:00:00Z').getTime();
+  return Math.round((d2-d1)/864e5);
+}
+function todayISO(){
+  const d = new Date();
+  const p = n => String(n).padStart(2,'0');
+  return d.getUTCFullYear()+'-'+p(d.getUTCMonth()+1)+'-'+p(d.getUTCDate());
+}
+const BANDS = (S.bands||[]).slice().sort();
+const N = BANDS.length;
+const away = S.last_visit ? daysBetween(S.last_visit, todayISO()) : 99;
+const mood = away <= 0 ? 'up' : away <= 2 ? 'soft' : 'tucked';
+
+const NS='http://www.w3.org/2000/svg';
+const snail=document.getElementById('snail');
+function el(tag, attrs){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); return e; }
+
+const grow = Math.min(1, 0.72 + N*0.012);
+const tilt = mood==='up' ? -9 : mood==='soft' ? -2 : 6;
+const drop = mood==='tucked' ? 14 : 0;
+const dim  = mood==='up' ? 1 : mood==='soft' ? .88 : .62;
+
+const g = el('g',{transform:'translate(0,'+drop+') rotate('+tilt+' 300 250)','opacity':dim,'class':'bob'});
+snail.appendChild(g);
+
+// trail
+const trail=el('path',{d:'M238 262 C 214 268, 186 272, 158 270 S 116 266, 96 272',
+  fill:'none',stroke:'#c3cdb8', 'stroke-opacity':'.16','stroke-width':13,'stroke-linecap':'round'});
+g.appendChild(trail);
+
+// foot / body
+const body=el('path',{d:'M232 246 C 236 232, 258 226, 282 226 L 344 226 C 356 226, 362 234, 358 244 C 353 256, 330 262, 300 264 L 250 264 C 238 264, 230 256, 232 246 Z',
+  fill:'url(#bodyG)'});
+g.appendChild(body);
+// head
+const head=el('ellipse',{cx:'348',cy:'236',rx:'22',ry:'19',fill:'url(#bodyG)'});
+g.appendChild(head);
+// tentacles
+function tent(x,y,h,ang){
+  const p=el('path',{d:'M '+x+' '+y+' q '+(ang*4)+' '+(h*-0.55)+' '+(ang*9)+' '+(h*-1),fill:'none',stroke:'#9aa68e','stroke-width':3,'stroke-linecap':'round'});
+  g.appendChild(p);
+  const t=el('circle',{cx:x+ang*9,cy:y-h,r:2.6,fill:'#3a3f37'});
+  g.appendChild(t);
+}
+tent(352,222,20,-1); tent(360,228,16,1);
+// shell
+const cx=292, cy=198, R=56;
+const shell=el('circle',{cx:cx,cy:cy,r:R,fill:'url(#shellG)'});
+g.appendChild(shell);
+// spiral + one band per day
+const turns=2.8;
+const steps=Math.max(1,N);
+for(let i=0;i<steps;i++){
+  const t0=(i/steps), t1=t0+ (0.62/steps);
+  const pts=[];
+  const seg=64;
+  for(let k=0;k<=seg;k++){
+    const t=t0+(t1-t0)*(k/seg);
+    const a=t*turns*Math.PI*2 - Math.PI*0.5;
+    const r=R*0.97*(1-t*0.9);
+    pts.push([cx+Math.cos(a)*r, cy+Math.sin(a)*r]);
+  }
+  const d='M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L ');
+  const band=el('path',{d:d,fill:'none',stroke:'#4a2d14','stroke-opacity':'.8','stroke-width':5,'stroke-linecap':'round'});
+  g.appendChild(band);
+}
+const spiral=el('path',{d:(()=>{const pts=[];for(let k=0;k<=460;k++){const t=k/220;const a=t*turns*Math.PI*2-Math.PI*0.5;const r=R*0.97*(1-t*0.9);pts.push([cx+Math.cos(a)*r,cy+Math.sin(a)*r]);}return 'M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L ');})(),
+  fill:'none',stroke:'#7a4f2c','stroke-opacity':'.11','stroke-width':0.8});
+g.appendChild(spiral);
+// highlight
+
+
+document.getElementById('nm').textContent = S.name || 'the snail';
+document.getElementById('state').textContent =
+  mood==='up' ? 'up, tilted toward the glass' :
+  mood==='soft' ? 'easy, half out of the shell' : 'tucked in, a bit dimmer';
+
+const facts=document.getElementById('facts');
+const rows=[
+  ['bands on the shell', N + (N===1 ? ' band' : ' bands')],
+  ['last time I was here', S.last_visit ? S.last_visit : 'not yet'],
+  ['last thing I gave him', S.last_gift ? S.last_gift : 'nothing yet'],
+];
+facts.innerHTML = rows.map(r=>'<div>'+r[0]+': <b>'+r[1]+'</b></div>').join('');
+</script>
+</body>
+</html>
