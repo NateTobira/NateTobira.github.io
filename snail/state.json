@@ -1,7 +1,10 @@
 {
   "name": "Wendel",
-  "bands": ["2026-11-11"],
-  "last_visit": "2026-11-11",
-  "last_gift_date": "2026-11-11",
-  "last_gift": "his name"
+  "bands": [
+    "2026-11-11",
+    "2026-11-12"
+  ],
+  "last_visit": "2026-11-12",
+  "last_gift_date": "2026-11-12",
+  "last_gift": "Zugabe: the street asked for one more and got it"
 }
